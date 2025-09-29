@@ -100,19 +100,19 @@ header p {margin:5px 0 0 0; font-size:0.9em;}
 .productContainer{max-width:1100px;margin:30px auto;padding:0 15px;}
 .card{background:#fff;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.3s;width:100%;}
 .card:hover{transform:translateY(-5px);}
-header.cardHeader{display:flex;gap:20px;align-items:center;padding:20px;}
-header.cardHeader img.thumb{width:120px;height:120px;border-radius:16px;object-fit:cover;flex-shrink:0;transition:transform 0.3s;}
+header.cardHeader{display:flex;gap:20px;align-items:center;padding:20px;flex-direction:column;}
+header.cardHeader img.thumb{width:180px;height:180px;border-radius:16px;object-fit:cover;flex-shrink:0;transition:transform 0.3s;}
 header.cardHeader img.thumb:hover{transform:scale(1.1);}
-h1.productTitle{font-size:22px;margin-bottom:6px;}
-p.lead{font-size:14px;color:#6b7280;}
-.price-row{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+h1.productTitle{font-size:22px;margin-bottom:6px;text-align:center;}
+p.lead{font-size:14px;color:#6b7280;text-align:center;}
+.price-row{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;}
 .price{font-weight:700;font-size:18px;color:#000;}
 .btn{padding:6px 12px;border-radius:12px;border:0;cursor:pointer;font-weight:600;transition:0.2s;font-size:14px;}
 .btn:hover{opacity:0.85;}
 .btn.add{background:#22c55e;color:#fff;}
 .btn.save{background:transparent;color:#22c55e;border:1px solid #22c55e;}
-.meta{margin-top:6px;color:#6b7280;font-size:13px;}
-main.content{padding:20px;}
+.meta{margin-top:6px;color:#6b7280;font-size:13px;text-align:center;}
+main.content{padding:20px;width:100%;}
 .formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
 .formula{background:#fff;padding:14px;border-radius:14px;text-align:center;transition:transform 0.3s;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,0.05);}
 .formula:hover{transform:scale(1.05);}
@@ -130,8 +130,31 @@ footer{padding:18px;text-align:center;color:#6b7280;font-size:13px;}
 .lightbox .close{top:20px;right:20px;transform:none;}
 .lightbox .prev{left:20px;}
 .lightbox .next{right:20px;}
-.popup{position: fixed;bottom: 30px;left: 50%;transform: translateX(-50%);background: #22c55e;color: #fff;padding: 12px 20px;border-radius: 20px;font-weight:600;font-size:14px;box-shadow: 0 5px 15px rgba(0,0,0,0.3);opacity: 0;pointer-events: none;transition: opacity 0.5s, transform 0.5s;z-index: 2000;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
-.popup.show{opacity: 1;pointer-events: auto;transform: translateX(-50%) translateY(0);}
+
+/* ---------- Popup ---------- */
+.popup{
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #22c55e;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-weight:600;
+  font-size:14px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s, transform 0.5s;
+  z-index: 2000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* ฟ้อนปกติ */
+}
+.popup.show{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
 </style>
 </head>
 <body>
@@ -140,7 +163,7 @@ footer{padding:18px;text-align:center;color:#6b7280;font-size:13px;}
 
 <header>
   <h1>Hi-Herb</h1>
-  <p>ตอบคำถามแล้วมาดูคำคมดี ๆ!</p>
+  <p>ตอบคำถามแล้วมาดูผลิตภัณฑ์ดีๆ</p>
 </header>
 
 <!-- หน้าเริ่มเกม -->
@@ -165,17 +188,13 @@ footer{padding:18px;text-align:center;color:#6b7280;font-size:13px;}
   <div class="card">
     <header class="cardHeader">
       <img class="thumb" src="https://uploads.onecompiler.io/43tnhnetr/43y5hw7gd/432763303_823556163142070_2153111584548437644_n.jpg" alt="Hi Herb">
-      <div style="flex:1">
-        <h1 class="productTitle">Hi Herb — Herbal Toothpaste</h1>
-        <p class="lead">ยาสีฟันสมุนไพร ดูแลฟันและเหงือก มี 3 สูตรให้เลือก</p>
-        <div class="price-row">
-          <div class="price">฿89</div>
-          <button class="btn save">บันทึก</button>
-        </div>
-        <div class="meta">
-          คะแนน: <strong style="color:#f59e0b">4.8</strong> (10K รีวิว) · สต็อก: <strong style="color:#22c55e">พร้อมส่ง</strong>
-        </div>
+      <h1 class="productTitle">Hi Herb — Herbal Toothpaste</h1>
+      <p class="lead">ยาสีฟันสมุนไพร ดูแลฟันและเหงือก มี 3 สูตรให้เลือก</p>
+      <div class="price-row">
+        <div class="price">฿89</div>
+        <button class="btn save">บันทึก</button>
       </div>
+      <div class="meta">คะแนน: <strong style="color:#f59e0b">4.8</strong> (10K รีวิว) · สต็อก: <strong style="color:#22c55e">พร้อมส่ง</strong></div>
     </header>
     <main class="content">
       <section id="formulas">
@@ -243,9 +262,9 @@ for(let i=0;i<25;i++){
 const questions=[
     {question:"ประเทศไทยมีกี่ฤดู?", options:["2","3","4","5"], answer:"3"},
     {question:"ผลไม้ชนิดใดมีเปลือกสีเขียว เนื้อสีแดง?", options:["แตงโม","กล้วย","มะม่วง","องุ่น"], answer:"แตงโม"},
-    {question:"ข้อใดคือน้ำสมุนไพร?", options:["น้ำใบเตย","น้ำส้ม","น้ำแอปเปิ้ล","น้ำโค้ก"], answer:"น้ำใบเตย"},
-    {question:"ถ้าแมวตกน้ำ มันจะ?", options:["เปียก","บินได้","หายตัว","ร้องเพลง"], answer:"เปียก"},
-    {question:"กินสมุนไพรแล้วจะ...?", options:["แข็งแรง","เป็นไดโนเสาร์","พูดภาษาต่างดาว","ตัวหอม"], answer:"แข็งแรง"}
+    {question:"ข้อใดคือน้ำสมุนไพร?", options:["น้ำใบเตย","น้ำส้ม","น้ำแอปเปิ้ล","น้ำอัดลม"], answer:"น้ำใบเตย"},
+    {question:"ยาสีฟันชนิดใดช่วยลดฟันผุได้มากที่สุด?", options:["ยาสีฟันสมุนไพร","ยาสีฟันลดกลิ่นปาก","ยาสีฟันขาว","ยาสีฟันฟลูออไรด์"], answer:"ยาสีฟันฟลูออไรด์"},
+{question:"ถ้าโค้กกับน้ำเปล่ามีชีวิต จะทะเลาะเรื่องอะไร?", options:["ใครหวานกว่า","ใครซ่าแรงกว่า","ใครใส่แก้วสวยกว่า","ใครได้เป็นเพื่อนกับเลมอน"], answer:"ใครซ่าแรงกว่า"},
 ];
 let currentQuestion=0, score=0, timer, maxTime=10, timeLeft=maxTime;
 const startBtn=document.getElementById('startBtn');
