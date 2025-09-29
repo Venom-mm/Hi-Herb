@@ -95,174 +95,36 @@ header p {margin:5px 0 0 0; font-size:0.9em;}
   .options button {font-size:12px; padding:10px;}
 }
 
-/* ----------------- หน้า Product Responsive ----------------- */
-#productScreen {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.productContainer {
-  max-width: 1100px;
-  width: 100%;
-  margin: 20px auto;
-  padding: 0 10px;
-}
-
-.card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
-  overflow: hidden;
-  transition: transform 0.3s;
-  width: 100%;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-}
-
-.cardHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  gap: 10px;
-}
-
-.cardHeader img.thumb {
-  width: 180px;
-  height: 180px;
-  border-radius: 16px;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.cardHeader img.thumb:hover {
-  transform: scale(1.05);
-}
-
-h1.productTitle {
-  font-size: 20px;
-  text-align: center;
-  margin: 5px 0;
-}
-
-p.lead {
-  font-size: 14px;
-  color: #6b7280;
-  text-align: center;
-  margin: 5px 0;
-}
-
-.price-row {
-  margin-top: 10px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.price {
-  font-weight: 700;
-  font-size: 18px;
-  color: #000;
-}
-
-.btn {
-  padding: 6px 12px;
-  border-radius: 12px;
-  border: 0;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-  font-size: 14px;
-}
-
-.btn.add {
-  background: #22c55e;
-  color: #fff;
-}
-
-.btn.save {
-  background: transparent;
-  color: #22c55e;
-  border: 1px solid #22c55e;
-}
-
-meta {
-  margin-top: 6px;
-  color: #6b7280;
-  font-size: 13px;
-  text-align: center;
-}
-
-main.content {
-  padding: 10px 10px 20px 10px;
-  width: 100%;
-}
-
-.formulas {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-}
-
-.formula {
-  background: #fff;
-  padding: 12px;
-  border-radius: 12px;
-  text-align: center;
-  transition: transform 0.3s;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.formula:hover {
-  transform: scale(1.05);
-}
-
-.formula img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.formula h3 {
-  margin: 6px 0 4px;
-  font-size: 14px;
-  color: #000;
-}
-
-.formula .btn-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.formula .btn-row button {
-  font-size: 13px;
-  padding: 8px;
-}
-
-footer {
-  padding: 12px;
-  text-align: center;
-  color: #6b7280;
-  font-size: 12px;
-}
+/* ----------------- หน้า Product ----------------- */
+#productScreen { display:none; flex-direction:column; align-items:center; width:100%; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.productContainer{max-width:1100px;margin:30px auto;padding:0 15px;}
+.card{background:#fff;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.3s;width:100%;}
+.card:hover{transform:translateY(-5px);}
+header.cardHeader{display:flex;gap:20px;align-items:center;padding:20px;flex-direction:column;}
+header.cardHeader img.thumb{width:180px;height:180px;border-radius:16px;object-fit:cover;flex-shrink:0;transition:transform 0.3s;}
+header.cardHeader img.thumb:hover{transform:scale(1.1);}
+h1.productTitle{font-size:22px;margin-bottom:6px;text-align:center;}
+p.lead{font-size:14px;color:#6b7280;text-align:center;}
+.price-row{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;}
+.price{font-weight:700;font-size:18px;color:#000;}
+.btn{padding:6px 12px;border-radius:12px;border:0;cursor:pointer;font-weight:600;transition:0.2s;font-size:14px;}
+.btn:hover{opacity:0.85;}
+.btn.add{background:#22c55e;color:#fff;}
+.btn.save{background:transparent;color:#22c55e;border:1px solid #22c55e;}
+.meta{margin-top:6px;color:#6b7280;font-size:13px;text-align:center;}
+main.content{padding:20px;width:100%;}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+.formula{background:#fff;padding:14px;border-radius:14px;text-align:center;transition:transform 0.3s;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+.formula:hover{transform:scale(1.05);}
+.formula img{width:120px;height:120px;object-fit:cover;border-radius:12px;}
+.formula h3{margin:8px 0 4px;font-size:16px;color:#000;}
+.formula .btn-row{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+footer{padding:18px;text-align:center;color:#6b7280;font-size:13px;}
 
 /* Lightbox */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:1000;visibility:hidden;opacity:0;transition:opacity 0.3s;}
 .lightbox.active{visibility:visible;opacity:1;}
-.lightbox img{max-width:90%;max-height:70vh;border-radius:12px;transition:0.3s;}
+.lightbox img{max-width:90%;max-height:85vh;border-radius:12px;transition:0.3s;}
 .lightbox .close, .lightbox .prev, .lightbox .next{
   position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:36px;height:36px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;}
 .lightbox .close{top:20px;right:20px;transform:none;}
@@ -286,7 +148,7 @@ footer {
   pointer-events: none;
   transition: opacity 0.5s, transform 0.5s;
   z-index: 2000;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* ฟ้อนปกติ */
 }
 .popup.show{
   opacity: 1;
@@ -306,7 +168,7 @@ footer {
 
 <!-- หน้าเริ่มเกม -->
 <div id="startScreen">
-  <h2>🌿 Hi-Herb - เกมคำถาม</h2>
+  <h2>Q&A GAME</h2>
   <button id="startBtn">TAP TO START</button>
 </div>
 
@@ -402,11 +264,15 @@ const questions=[
     {question:"ผลไม้ชนิดใดมีเปลือกสีเขียว เนื้อสีแดง?", options:["แตงโม","กล้วย","มะม่วง","องุ่น"], answer:"แตงโม"},
     {question:"ข้อใดคือน้ำสมุนไพร?", options:["น้ำใบเตย","น้ำส้ม","น้ำแอปเปิ้ล","น้ำอัดลม"], answer:"น้ำใบเตย"},
     {question:"ยาสีฟันชนิดใดช่วยลดฟันผุได้มากที่สุด?", options:["ยาสีฟันสมุนไพร","ยาสีฟันลดกลิ่นปาก","ยาสีฟันขาว","ยาสีฟันฟลูออไรด์"], answer:"ยาสีฟันฟลูออไรด์"},
-    {question:"ถ้าโค้กกับน้ำเปล่ามีชีวิต จะทะเลาะเรื่องอะไร?", options:["ใครหวานกว่า","ใครซ่าแรงกว่า","ใครใส่แก้วสวยกว่า","ใครได้เป็นเพื่อนกับเลมอน"], answer:"ใครซ่าแรงกว่า"},
+{question:"ถ้าโค้กกับน้ำเปล่ามีชีวิต จะทะเลาะเรื่องอะไร?", options:["ใครหวานกว่า","ใครซ่าแรงกว่า","ใครใส่แก้วสวยกว่า","ใครได้เป็นเพื่อนกับเลมอน"], answer:"ใครซ่าแรงกว่า"},
 ];
 let currentQuestion=0, score=0, timer, maxTime=10, timeLeft=maxTime;
 const startBtn=document.getElementById('startBtn');
-startBtn.addEventListener('click',()=>{ document.getElementById('startScreen').style.display='none'; document.getElementById('questionBoxGame').style.display='block'; loadQuestion(); });
+startBtn.addEventListener('click',()=>{
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('questionBoxGame').style.display='block';
+  loadQuestion();
+});
 
 function loadQuestion(){
   clearInterval(timer);
@@ -505,11 +371,23 @@ const prevBtn=document.getElementById("prevBtn");
 const nextBtn=document.getElementById("nextBtn");
 const formulaImgs=[...document.querySelectorAll(".formula img")];
 let currentIndex=0;
-formulaImgs.forEach((img,i)=>{ img.addEventListener("click",()=>{ currentIndex=i; lightboxImg.src=img.src; lightbox.classList.add("active"); }); });
+formulaImgs.forEach((img,i)=>{
+  img.addEventListener("click",()=>{
+    currentIndex=i;
+    lightboxImg.src=img.src;
+    lightbox.classList.add("active");
+  });
+});
 closeBtn.addEventListener("click",()=>lightbox.classList.remove("active"));
 lightbox.addEventListener("click",e=>{if(e.target===lightbox){lightbox.classList.remove("active");}});
-prevBtn.addEventListener("click",()=>{ currentIndex=(currentIndex-1+formulaImgs.length)%formulaImgs.length; lightboxImg.src=formulaImgs[currentIndex].src; });
-nextBtn.addEventListener("click",()=>{ currentIndex=(currentIndex+1)%formulaImgs.length; lightboxImg.src=formulaImgs[currentIndex].src; });
+prevBtn.addEventListener("click",()=>{
+  currentIndex=(currentIndex-1+formulaImgs.length)%formulaImgs.length;
+  lightboxImg.src=formulaImgs[currentIndex].src;
+});
+nextBtn.addEventListener("click",()=>{
+  currentIndex=(currentIndex+1)%formulaImgs.length;
+  lightboxImg.src=formulaImgs[currentIndex].src;
+});
 
 /* ---------- Popup ---------- */
 function showPopup(message) {
@@ -520,10 +398,16 @@ function showPopup(message) {
 }
 
 const buyBtns = document.querySelectorAll('.formula .btn.add');
-buyBtns.forEach(btn=>{ btn.addEventListener('click',()=>{ const formulaName = btn.dataset.name; showPopup(`ขอบคุณที่อุดหนุน ${formulaName} นะค๊าบ`); }); });
+buyBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const formulaName = btn.dataset.name;
+    showPopup(`ขอบคุณที่อุดหนุน ${formulaName} นะค๊าบ`);
+  });
+});
 const saveBtns = document.querySelectorAll('.formula .btn.save');
-saveBtns.forEach(btn=>{ btn.addEventListener('click',()=>{ showPopup('อย่าลืมกดซื้อใช้เยอะๆ น้า'); }); });
+saveBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{ showPopup('อย่าลืมกดซื้อใช้เยอะๆ น้า'); });
+});
 </script>
-
 </body>
 </html>
