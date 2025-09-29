@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hi-Herb - เกมคำถาม</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+/* ----------------- เกม ----------------- */
+body {
+  font-family: 'Press Start 2P', cursive;
+  margin:0; padding:0;
+  background: linear-gradient(-45deg, #d0ffe0, #c0f5ff, #fff3c0, #d0ffe0);
+  background-size:400% 400%;
+  animation: gradientBG 15s ease infinite;
+  overflow-x:hidden;
+  color:#000;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100vh;
+  padding-top:40px;
+}
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+header {text-align:center; margin-bottom:20px; z-index:2;}
+header h1 {margin:0; font-size:2.2em;}
+header p {margin:5px 0 0 0; font-size:0.9em;}
+.bubbles {position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:0;}
+.bubble {
+  position:absolute; bottom:-100px; background: rgba(47,109,47,0.3);
+  border-radius:50%; opacity:0.7; animation-name:rise; animation-timing-function:linear; animation-iteration-count:infinite;
+}
+@keyframes rise {
+  0% {transform: translateY(0) scale(1); opacity:0.7;}
+  100% {transform: translateY(-110vh) scale(1.5); opacity:0;}
+}
+/* หน้าเริ่มเกม */
+#startScreen {
+  position:fixed; top:0; left:0; width:100vw; height:100vh;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  background:rgba(255,255,255,0.9); z-index:3;
+}
+#startScreen h2 {font-size:1.5em; margin-bottom:20px; text-align:center;}
+#startBtn {
+  padding:15px 40px; font-size:1em; border:none; border-radius:12px;
+  background-color:#2f6d2f; color:white; cursor:pointer; transition:0.3s;
+  animation: pulseBtn 2s infinite;
+}
+#startBtn:hover { background-color:#95d5b2; color:#1b4332; }
+@keyframes pulseBtn {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 10px #2f6d2f; }
+  50% { transform: scale(1.1); box-shadow: 0 0 25px #95d5b2; }
+}
+/* กล่องเกม */
+.question-box {
+  background-color:#ffffffdd; padding:20px; border-radius:12px;
+  box-shadow:0 0 15px #aaa; width:90%; max-width:400px; text-align:center; z-index:2; margin-top:20px;
+  transition:0.3s;
+}
+/* ปุ่มตัวเลือก */
+.options button {
+  display:block; width:100%; margin:10px 0; padding:12px;
+  border:none; border-radius:6px; background-color:#d8f3dc;
+  cursor:pointer; font-size:14px; transition:0.3s;
+}
+.options button:hover { animation: glow 1s infinite alternate; }
+@keyframes glow {
+  0% { background-color:#d8f3dc; }
+  50% { background-color:#95d5b2; }
+  100% { background-color:#d8f3dc; }
+}
+/* animation ตอบถูก/ผิด */
+.correct { animation: correctAnim 0.8s; }
+.incorrect { animation: incorrectAnim 0.8s; }
+@keyframes correctAnim {
+  0% {background-color:#ffffffdd; transform:scale(1);}
+  50% {background-color:#c8f7c5; transform:scale(1.05);}
+  100% {background-color:#ffffffdd; transform:scale(1);}
+}
+@keyframes incorrectAnim {
+  0% {background-color:#ffffffdd; transform:rotate(0deg);}
+  25% {background-color:#f8d7da; transform:rotate(-5deg);}
+  50% {background-color:#f8d7da; transform:rotate(5deg);}
+  75% {background-color:#f8d7da; transform:rotate(-5deg);}
+  100% {background-color:#ffffffdd; transform:rotate(0deg);}
+}
+#timerGame { font-weight:bold; margin-bottom:5px; }
+#timeBarContainerGame { width:100%; height:12px; background:#ddd; border-radius:10px; overflow:hidden; margin-bottom:15px; }
+#timeBarGame { height:100%; width:100%; background:#4CAF50; transition:width 1s linear, background-color 0.5s ease; }
+#resultGame { margin-top:15px; font-size:1em; font-weight:bold; color:#1b4332; text-align:center; display:none; }
+@media(max-width:400px){
+  header h1 {font-size:1.8em;}
+  header p {font-size:0.8em;}
+  .options button {font-size:12px; padding:10px;}
+}
+
+/* ----------------- หน้า Product ----------------- */
+#productScreen { display:none; flex-direction:column; align-items:center; width:100%; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.productContainer{max-width:1100px;margin:30px auto;padding:0 15px;}
+.card{background:#fff;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.3s;width:100%;}
+.card:hover{transform:translateY(-5px);}
+header.cardHeader{display:flex;gap:20px;align-items:center;padding:20px;}
+header.cardHeader img.thumb{width:120px;height:120px;border-radius:16px;object-fit:cover;flex-shrink:0;transition:transform 0.3s;}
+header.cardHeader img.thumb:hover{transform:scale(1.1);}
+h1.productTitle{font-size:22px;margin-bottom:6px;}
+p.lead{font-size:14px;color:#6b7280;}
+.price-row{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.price{font-weight:700;font-size:18px;color:#000;}
+.btn{padding:6px 12px;border-radius:12px;border:0;cursor:pointer;font-weight:600;transition:0.2s;font-size:14px;}
+.btn:hover{opacity:0.85;}
+.btn.add{background:#22c55e;color:#fff;}
+.btn.save{background:transparent;color:#22c55e;border:1px solid #22c55e;}
+.meta{margin-top:6px;color:#6b7280;font-size:13px;}
+main.content{padding:20px;}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+.formula{background:#fff;padding:14px;border-radius:14px;text-align:center;transition:transform 0.3s;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+.formula:hover{transform:scale(1.05);}
+.formula img{width:120px;height:120px;object-fit:cover;border-radius:12px;}
+.formula h3{margin:8px 0 4px;font-size:16px;color:#000;}
+.formula .btn-row{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+footer{padding:18px;text-align:center;color:#6b7280;font-size:13px;}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:1000;visibility:hidden;opacity:0;transition:opacity 0.3s;}
+.lightbox.active{visibility:visible;opacity:1;}
+.lightbox img{max-width:90%;max-height:85vh;border-radius:12px;transition:0.3s;}
+.lightbox .close, .lightbox .prev, .lightbox .next{
+  position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:36px;height:36px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;}
+.lightbox .close{top:20px;right:20px;transform:none;}
+.lightbox .prev{left:20px;}
+.lightbox .next{right:20px;}
+.popup{position: fixed;bottom: 30px;left: 50%;transform: translateX(-50%);background: #22c55e;color: #fff;padding: 12px 20px;border-radius: 20px;font-weight:600;font-size:14px;box-shadow: 0 5px 15px rgba(0,0,0,0.3);opacity: 0;pointer-events: none;transition: opacity 0.5s, transform 0.5s;z-index: 2000;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
+.popup.show{opacity: 1;pointer-events: auto;transform: translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="bubbles" id="bubbles"></div>
+
+<header>
+  <h1>Hi-Herb</h1>
+  <p>ตอบคำถามแล้วมาดูคำคมดี ๆ!</p>
+</header>
+
+<!-- หน้าเริ่มเกม -->
+<div id="startScreen">
+  <h2>🌿 Hi-Herb - เกมคำถาม</h2>
+  <button id="startBtn">TAP TO START</button>
+</div>
+
+<!-- กล่องเกม -->
+<div class="question-box" id="questionBoxGame" style="display:none;">
+  <div id="timerGame">เวลา: <span id="timeGame">10</span> วินาที</div>
+  <div id="timeBarContainerGame"><div id="timeBarGame"></div></div>
+  <div id="questionGame">กำลังโหลดคำถาม...</div>
+  <div class="options" id="optionsGame"></div>
+</div>
+
+<div id="resultGame"></div>
+
+<!-- หน้า Product -->
+<div id="productScreen">
+<div class="productContainer">
+  <div class="card">
+    <header class="cardHeader">
+      <img class="thumb" src="https://uploads.onecompiler.io/43tnhnetr/43y5hw7gd/432763303_823556163142070_2153111584548437644_n.jpg" alt="Hi Herb">
+      <div style="flex:1">
+        <h1 class="productTitle">Hi Herb — Herbal Toothpaste</h1>
+        <p class="lead">ยาสีฟันสมุนไพร ดูแลฟันและเหงือก มี 3 สูตรให้เลือก</p>
+        <div class="price-row">
+          <div class="price">฿89</div>
+          <button class="btn save">บันทึก</button>
+        </div>
+        <div class="meta">
+          คะแนน: <strong style="color:#f59e0b">4.8</strong> (10K รีวิว) · สต็อก: <strong style="color:#22c55e">พร้อมส่ง</strong>
+        </div>
+      </div>
+    </header>
+    <main class="content">
+      <section id="formulas">
+        <h2>3 สูตร</h2>
+        <div class="formulas">
+          <div class="formula">
+            <img src="https://uploads.onecompiler.io/43tnhnetr/43y5hw7gd/%E0%B8%AA%E0%B8%B5%E0%B9%80%E0%B8%82%E0%B8%B5%E0%B8%A2%E0%B8%A7.png" alt="Day & Night Care">
+            <h3>Day & Night Care</h3>
+            <div class="btn-row">
+              <button class="btn add" data-name="Day & Night Care">ซื้อเลย</button>
+              <button class="btn save">กดไว้ในตะกร้า</button>
+            </div>
+          </div>
+          <div class="formula">
+            <img src="https://uploads.onecompiler.io/43tnhnetr/43y5hw7gd/%E0%B8%AA%E0%B8%B5%E0%B9%81%E0%B8%94%E0%B8%87.png" alt="Advance Gum Care">
+            <h3>Advance Gum Care</h3>
+            <div class="btn-row">
+              <button class="btn add" data-name="Advance Gum Care">ซื้อเลย</button>
+              <button class="btn save">กดไว้ในตะกร้า</button>
+            </div>
+          </div>
+          <div class="formula">
+            <img src="https://uploads.onecompiler.io/43tnhnetr/43y5hw7gd/%E0%B8%AA%E0%B8%B5%E0%B8%9F%E0%B9%89%E0%B8%B2.png" alt="Premium Organic Care">
+            <h3>Premium Organic Care</h3>
+            <div class="btn-row">
+              <button class="btn add" data-name="Premium Organic Care">ซื้อเลย</button>
+              <button class="btn save">กดไว้ในตะกร้า</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>© <span id="year"></span> Hi Herb</footer>
+  </div>
+</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="close" id="closeBtn">×</button>
+  <button class="prev" id="prevBtn">◀</button>
+  <img id="lightboxImg">
+  <button class="next" id="nextBtn">▶</button>
+</div>
+
+<!-- Popup -->
+<div class="popup" id="popup"></div>
+
+<script>
+/* ---------- ฟองอากาศ ---------- */
+const bubblesContainer=document.getElementById('bubbles');
+for(let i=0;i<25;i++){
+  const bubble=document.createElement('div');
+  bubble.classList.add('bubble');
+  const size=Math.random()*30+10;
+  bubble.style.width=size+'px';
+  bubble.style.height=size+'px';
+  bubble.style.left=Math.random()*100+'vw';
+  bubble.style.animationDuration=(Math.random()*10+5)+'s';
+  bubble.style.animationDelay=(Math.random()*15)+'s';
+  bubblesContainer.appendChild(bubble);
+}
+
+/* ---------- เกม ---------- */
+const questions=[
+    {question:"ประเทศไทยมีกี่ฤดู?", options:["2","3","4","5"], answer:"3"},
+    {question:"ผลไม้ชนิดใดมีเปลือกสีเขียว เนื้อสีแดง?", options:["แตงโม","กล้วย","มะม่วง","องุ่น"], answer:"แตงโม"},
+    {question:"ข้อใดคือน้ำสมุนไพร?", options:["น้ำใบเตย","น้ำส้ม","น้ำแอปเปิ้ล","น้ำโค้ก"], answer:"น้ำใบเตย"},
+    {question:"ถ้าแมวตกน้ำ มันจะ?", options:["เปียก","บินได้","หายตัว","ร้องเพลง"], answer:"เปียก"},
+    {question:"กินสมุนไพรแล้วจะ...?", options:["แข็งแรง","เป็นไดโนเสาร์","พูดภาษาต่างดาว","ตัวหอม"], answer:"แข็งแรง"}
+];
+let currentQuestion=0, score=0, timer, maxTime=10, timeLeft=maxTime;
+const startBtn=document.getElementById('startBtn');
+startBtn.addEventListener('click',()=>{
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('questionBoxGame').style.display='block';
+  loadQuestion();
+});
+
+function loadQuestion(){
+  clearInterval(timer);
+  timeLeft=maxTime;
+  document.getElementById('timeGame').innerText=timeLeft;
+  updateTimeBar();
+  const q=questions[currentQuestion];
+  const box=document.getElementById('questionBoxGame');
+  box.classList.remove('correct','incorrect');
+  document.getElementById('questionGame').innerText=`ข้อที่ ${currentQuestion+1}: ${q.question}`;
+  const optionsDiv=document.getElementById('optionsGame');
+  optionsDiv.innerHTML='';
+  q.options.forEach(option=>{
+    const btn=document.createElement('button');
+    btn.innerText=option;
+    btn.onclick=()=>checkAnswer(option,btn);
+    optionsDiv.appendChild(btn);
+  });
+  timer=setInterval(()=>{
+    timeLeft--;
+    document.getElementById('timeGame').innerText=timeLeft;
+    updateTimeBar();
+    if(timeLeft===0){ clearInterval(timer); handleTimeout();}
+  },1000);
+}
+
+function updateTimeBar(){
+  const bar=document.getElementById('timeBarGame');
+  const pct=(timeLeft/maxTime)*100;
+  bar.style.width=pct+'%';
+  if(pct>70) bar.style.backgroundColor='#4CAF50';
+  else if(pct>40) bar.style.backgroundColor='#FFEB3B';
+  else if(pct>15) bar.style.backgroundColor='#FF9800';
+  else bar.style.backgroundColor='#E53935';
+}
+
+function checkAnswer(selected,btn){
+  clearInterval(timer);
+  const correct=questions[currentQuestion].answer;
+  const box=document.getElementById('questionBoxGame');
+  if(selected===correct){score++; box.classList.add('correct');}
+  else box.classList.add('incorrect');
+  document.querySelectorAll('.options button').forEach(b=>b.disabled=true);
+  setTimeout(()=>{
+    currentQuestion++;
+    if(currentQuestion<questions.length) loadQuestion();
+    else showResult();
+  },800);
+}
+
+function handleTimeout(){
+  const box=document.getElementById('questionBoxGame');
+  box.classList.add('incorrect');
+  document.querySelectorAll('.options button').forEach(b=>b.disabled=true);
+  setTimeout(showResult,800);
+}
+
+function showResult(){
+  document.getElementById('questionGame').innerText="🎉 คุณเล่นจบแล้ว!";
+  document.getElementById('optionsGame').innerHTML='';
+  document.getElementById('timerGame').style.display='none';
+  document.getElementById('timeBarContainerGame').style.display='none';
+  const resultDiv = document.getElementById('resultGame');
+  resultDiv.style.display = "flex";
+  resultDiv.style.flexDirection = "column";
+  resultDiv.style.alignItems = "center";
+  resultDiv.style.marginTop = "20px";
+  resultDiv.innerHTML = `
+    <div style="text-align:center; margin-bottom:15px;">
+      คุณได้คะแนน ${score} จาก ${questions.length}
+    </div>
+    <button id="nextBtnResult" style="
+      padding:15px 40px;
+      background-color:#2f6d2f;
+      color:#fff;
+      border:none;
+      border-radius:12px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+    ">NEXT</button>
+  `;
+  document.getElementById('nextBtnResult').addEventListener('click',()=>{
+    document.getElementById('questionBoxGame').style.display='none';
+    resultDiv.style.display='none';
+    document.getElementById('productScreen').style.display='flex';
+  });
+}
+
+/* ---------- Lightbox ---------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+const lightbox=document.getElementById("lightbox");
+const lightboxImg=document.getElementById("lightboxImg");
+const closeBtn=document.getElementById("closeBtn");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const formulaImgs=[...document.querySelectorAll(".formula img")];
+let currentIndex=0;
+formulaImgs.forEach((img,i)=>{
+  img.addEventListener("click",()=>{
+    currentIndex=i;
+    lightboxImg.src=img.src;
+    lightbox.classList.add("active");
+  });
+});
+closeBtn.addEventListener("click",()=>lightbox.classList.remove("active"));
+lightbox.addEventListener("click",e=>{if(e.target===lightbox){lightbox.classList.remove("active");}});
+prevBtn.addEventListener("click",()=>{
+  currentIndex=(currentIndex-1+formulaImgs.length)%formulaImgs.length;
+  lightboxImg.src=formulaImgs[currentIndex].src;
+});
+nextBtn.addEventListener("click",()=>{
+  currentIndex=(currentIndex+1)%formulaImgs.length;
+  lightboxImg.src=formulaImgs[currentIndex].src;
+});
+
+/* ---------- Popup ---------- */
+function showPopup(message) {
+  const popup = document.getElementById('popup');
+  popup.textContent = message;
+  popup.classList.add('show');
+  setTimeout(()=>{ popup.classList.remove('show'); }, 2500);
+}
+
+const buyBtns = document.querySelectorAll('.formula .btn.add');
+buyBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const formulaName = btn.dataset.name;
+    showPopup(`ขอบคุณที่อุดหนุน ${formulaName} นะค๊าบ`);
+  });
+});
+const saveBtns = document.querySelectorAll('.formula .btn.save');
+saveBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{ showPopup('อย่าลืมกดซื้อใช้เยอะๆ น้า'); });
+});
+</script>
+</body>
+</html>
